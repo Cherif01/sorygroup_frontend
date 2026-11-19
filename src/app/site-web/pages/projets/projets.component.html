@@ -1,0 +1,42 @@
+<app-site-page-hero
+  eyebrow="Nos projets"
+  title="Des initiatives qui transforment la filière"
+  subtitle="Chaque projet est un partenariat de long terme avec une coopérative, un négociant, un bailleur ou une collectivité.">
+</app-site-page-hero>
+
+<section class="section section--light">
+  <div class="container">
+    <div class="projets">
+      @for (p of projets; track p.titre) {
+        <article class="projet">
+          <div class="projet__image" [style.background-image]="'url(' + p.image + ')'">
+            <span class="pill" [class]="'pill--' + p.tone">{{ p.statut }}</span>
+          </div>
+          <div class="projet__body">
+            <div class="projet__meta">
+              <span><app-icon name="map-pin" [size]="12" /> {{ p.lieu }}</span>
+              <span><app-icon name="calendar" [size]="12" /> {{ p.annee }}</span>
+            </div>
+            <h3>{{ p.titre }}</h3>
+            <p>{{ p.desc }}</p>
+            <div class="projet__tags">
+              @for (t of p.tags; track t) { <span class="projet__tag">{{ t }}</span> }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta__inner">
+    <div>
+      <h2>Vous avez un projet similaire ?</h2>
+      <p>Parlons-en — chaque filière, chaque zone est unique.</p>
+    </div>
+    <a routerLink="/site-web/partenariat" class="btn btn--primary btn--lg">
+      <app-icon name="mail" [size]="18" /> Nous contacter
+    </a>
+  </div>
+</section>

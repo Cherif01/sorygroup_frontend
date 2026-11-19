@@ -1,0 +1,88 @@
+<section class="login">
+  <!-- Retour au site -->
+  <a routerLink="/site-web/home" class="login__back">
+    <app-icon name="chevron-left" [size]="16" /> Revenir au site
+  </a>
+
+  <div class="login__card">
+
+    <!-- Colonne gauche : marque -->
+    <aside class="login__brand">
+      <div class="login__brand-content">
+        <div class="login__logo">
+          <img src="logo.png" alt="" />
+        </div>
+        <h1 class="login__brand-title">{{ appName }}</h1>
+        <p class="login__brand-tagline">{{ appTagline }}</p>
+        <ul class="login__brand-features">
+          <li><app-icon name="check" [size]="14" /> Pilotage de la chaîne agricole</li>
+          <li><app-icon name="check" [size]="14" /> Collecte, dépôts, ventes, comptabilité</li>
+          <li><app-icon name="check" [size]="14" /> Accès par rôle et périmètre</li>
+        </ul>
+      </div>
+      <div class="login__brand-foot">© {{ year }} {{ appName }}</div>
+    </aside>
+
+    <!-- Colonne droite : formulaire -->
+    <div class="login__form">
+      <header class="login__form-head">
+        <h2>Connexion</h2>
+        <p>Accédez à votre espace de travail</p>
+      </header>
+
+      <form class="login__fields" (ngSubmit)="submit()">
+        <div class="field">
+          <label class="field__label field__label--required">Numéro de téléphone</label>
+          <div class="field__wrap">
+            <span class="field__icon"><app-icon name="phone" [size]="16" /></span>
+            <input type="tel" class="field__input"
+                   placeholder="620 00 00 00"
+                   [value]="telephone()"
+                   (input)="telephone.set($any($event.target).value)"
+                   autocomplete="tel"
+                   required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label field__label--required">Mot de passe</label>
+          <div class="field__wrap">
+            <span class="field__icon"><app-icon name="lock" [size]="16" /></span>
+            <input [type]="showPass() ? 'text' : 'password'"
+                   class="field__input"
+                   placeholder="••••••••"
+                   [value]="motDePasse()"
+                   (input)="motDePasse.set($any($event.target).value)"
+                   autocomplete="current-password"
+                   required />
+            <button type="button" class="field__toggle" (click)="showPass.set(!showPass())" tabindex="-1" aria-label="Afficher le mot de passe">
+              <app-icon [name]="showPass() ? 'eye-off' : 'eye'" [size]="16" />
+            </button>
+          </div>
+        </div>
+
+        <div class="login__options">
+          <label class="login__remember">
+            <input type="checkbox" [checked]="remember()" (change)="remember.set($any($event.target).checked)" />
+            <span>Rester connecté</span>
+          </label>
+          <a routerLink="/auth/mot-de-passe-oublie" class="login__forgot">Mot de passe oublié ?</a>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg login__submit" [disabled]="loading()">
+          @if (loading()) {
+            <span>Connexion…</span>
+          } @else {
+            <app-icon name="log-in" [size]="18" />
+            <span>Se connecter</span>
+          }
+        </button>
+
+        <p class="login__hint">
+          Besoin d'aide ? Contactez votre administrateur.
+        </p>
+      </form>
+    </div>
+
+  </div>
+</section>

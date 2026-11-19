@@ -1,0 +1,177 @@
+<div class="dt">
+  <!-- Toolbar -->
+  <div class="dt__toolbar">
+    @if (searchable()) {
+      <div class="dt__search">
+        <app-icon name="search" [size]="16" />
+        <input type="search"
+               [placeholder]="'Rechercher…'"
+               [value]="search()"
+               (input)="search.set($any($event.target).value); page.set(1)" />
+      </div>
+    }
+
+    <div class="dt__toolbar-right">
+      @if (selectable() && selected().size > 0) {
+        <span class="dt__selected-count">{{ selected().size }} sélection(s)</span>
+      }
+      @if (columnPicker()) {
+        <div class="dt__col-picker">
+          <button type="button" class="btn btn--secondary btn--sm" (click)="toggleColumnMenu()">
+            <app-icon name="sliders" [size]="14" /> Colonnes
+          </button>
+          @if (columnMenuOpen()) {
+            <div class="dt__col-menu">
+              @for (col of columns(); track trackByCol($index, col)) {
+                <label class="dt__col-menu-item">
+                  <input type="checkbox" [checked]="!col.hidden" (change)="toggleColumnVisible(col)" />
+                  {{ col.label }}
+                </label>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Table (desktop) -->
+  <div class="dt__scroll">
+    <table class="dt__table">
+      <thead>
+        <tr>
+          @if (selectable()) {
+            <th class="dt__th dt__th--check">
+              <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAll()" />
+            </th>
+          }
+          @for (col of visibleColumns(); track trackByCol($index, col)) {
+            <th class="dt__th"
+                [class.dt__th--sortable]="col.sortable"
+                [class.dt__th--right]="col.align === 'right'"
+                [class.dt__th--center]="col.align === 'center'"
+                [class.dt__th--hide-mobile]="col.hideOnMobile"
+                [style.width.px]="col.width"
+                [style.minWidth.px]="col.minWidth ?? 60"
+                (click)="sort(col)">
+              <span class="dt__th-inner">
+                {{ col.label }}
+                @if (col.sortable && sortCol() === col.key) {
+                  <app-icon [name]="sortDir() === 'asc' ? 'chevron-up' : 'chevron-down'" [size]="14" />
+                }
+              </span>
+              <span class="dt__resize" (mousedown)="startResize($event, col)"></span>
+            </th>
+          }
+          @if (showActions()) {
+            <th class="dt__th dt__th--actions" style="width:60px;">Actions</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @if (pagedRows().length === 0) {
+          <tr>
+            <td class="dt__empty" [attr.colspan]="visibleColumns().length + (selectable() ? 1 : 0) + (showActions() ? 1 : 0)">
+              <div class="dt__empty-inner">
+                <app-icon name="info" [size]="32" />
+                <p>{{ emptyText() }}</p>
+              </div>
+            </td>
+          </tr>
+        }
+        @for (row of pagedRows(); track trackByRow($index, row)) {
+          <tr class="dt__row"
+              [class.is-selected]="isSelected(row)"
+              (click)="rowClick.emit(row)">
+            @if (selectable()) {
+              <td class="dt__td dt__td--check" (click)="$event.stopPropagation()">
+                <input type="checkbox" [checked]="isSelected(row)" (change)="toggleRow(row)" />
+              </td>
+            }
+            @for (col of visibleColumns(); track trackByCol($index, col)) {
+              <td class="dt__td"
+                  [class.dt__td--right]="col.align === 'right'"
+                  [class.dt__td--center]="col.align === 'center'"
+                  [class.dt__td--hide-mobile]="col.hideOnMobile"
+                  [class.dt__td--editable]="editable() && col.editable"
+                  [style.minWidth.px]="col.minWidth ?? 60"
+                  (dblclick)="startEdit(row, col, $event)">
+                @if (editing(); as e) {
+                  @if (e.row === row && e.col.key === col.key) {
+                    <input class="dt__edit-input"
+                           [type]="col.inputType ?? 'text'"
+                           [(ngModel)]="e.value"
+                           (keydown)="onEditKey($event)"
+                           (blur)="commitEdit()"
+                           autofocus />
+                  } @else {
+                    <ng-container *ngTemplateOutlet="cell; context: { $implicit: row, col: col }"></ng-container>
+                  }
+                } @else {
+                  <ng-container *ngTemplateOutlet="cell; context: { $implicit: row, col: col }"></ng-container>
+                }
+              </td>
+            }
+            @if (showActions()) {
+              <td class="dt__td dt__td--actions"
+                  (click)="$event.stopPropagation()">
+                <button type="button" class="dt__action-btn"
+                        [matMenuTriggerFor]="sharedRowMenu"
+                        [matMenuTriggerData]="{ row: row }"
+                        aria-label="Actions">
+                  <app-icon name="more-vertical" [size]="16" />
+                </button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  @if (pageSize() > 0 && totalPages() > 1) {
+    <div class="dt__pagination">
+      <span class="dt__page-info">
+        {{ ((page() - 1) * pageSize()) + 1 }} – {{ ((page() - 1) * pageSize()) + pagedRows().length }}
+        sur {{ filteredRows().length }}
+      </span>
+      <div class="dt__page-controls">
+        <button type="button" class="btn btn--secondary btn--sm" (click)="prevPage()" [disabled]="page() === 1">
+          <app-icon name="chevron-left" [size]="14" />
+        </button>
+        <span class="dt__page-number">Page {{ page() }} / {{ totalPages() }}</span>
+        <button type="button" class="btn btn--secondary btn--sm" (click)="nextPage()" [disabled]="page() === totalPages()">
+          <app-icon name="chevron-right" [size]="14" />
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+<ng-template #cell let-row let-col="col">
+  @if (col.pill && col.pill(row); as pill) {
+    <span class="pill pill--{{ pill.tone }}">{{ pill.label }}</span>
+  } @else {
+    {{ getDisplay(row, col) }}
+  }
+</ng-template>
+
+<!-- Menu d'actions partagé pour toutes les lignes -->
+<mat-menu #sharedRowMenu="matMenu" class="sg-row-menu" xPosition="before">
+  <ng-template matMenuContent let-row="row">
+    <button mat-menu-item type="button" (click)="rowView.emit(row)">
+      <app-icon name="eye" [size]="16" /> <span>Voir</span>
+    </button>
+    <button mat-menu-item type="button" (click)="rowPrint.emit(row)">
+      <app-icon name="file-text" [size]="16" /> <span>Imprimer</span>
+    </button>
+    <button mat-menu-item type="button" (click)="rowEditAction.emit(row)">
+      <app-icon name="edit" [size]="16" /> <span>Modifier</span>
+    </button>
+    <button mat-menu-item type="button" class="sg-row-menu__danger"
+            (click)="rowDelete.emit(row)">
+      <app-icon name="trash" [size]="16" /> <span>Supprimer</span>
+    </button>
+  </ng-template>
+</mat-menu>

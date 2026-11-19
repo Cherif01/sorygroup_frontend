@@ -1,0 +1,217 @@
+// ============================================================
+// DIALOGS — Système unifié vert clair
+// Tailles : --sm (confirm), --md (simple), --lg (riche), --xl (long)
+// ============================================================
+
+/* Panel : conteneur racine Material — transparent, pas de doubleur */
+.sg-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: transparent;
+  --mdc-dialog-container-shape: 0;
+  --mdc-dialog-container-elevation-shadow: none;
+  padding: 0;
+  overflow: visible;
+  box-shadow: none;
+  background: transparent;
+}
+.sg-dialog .mat-mdc-dialog-surface {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.sg-dialog .mdc-dialog__container { box-shadow: none; }
+
+/* Tailles */
+.sg-dialog--sm { width: min(400px, 92vw); }
+.sg-dialog--md { width: min(560px, 92vw); }
+.sg-dialog--lg { width: min(720px, 94vw); }
+.sg-dialog--xl { width: min(920px, 96vw); }
+
+/* ============================================================
+   Structure interne commune : .sgd__*
+============================================================ */
+
+.sgd {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--shadow-4);
+  overflow: hidden;
+  max-height: 88vh;
+  width: 100%;
+}
+
+/* Header : bandeau vert clair avec icône ronde */
+.sgd__head {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  background: linear-gradient(180deg, var(--color-primary-softer) 0%, var(--color-surface) 100%);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.sgd__icon {
+  width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-soft);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+  flex-shrink: 0;
+}
+.sgd__icon--danger { color: var(--tone-danger-text); border-color: var(--tone-danger-border); background: var(--tone-danger-bg); }
+.sgd__icon--wait   { color: var(--tone-wait-text);   border-color: var(--tone-wait-border);   background: var(--tone-wait-bg); }
+.sgd__icon--info   { color: var(--tone-info-text);   border-color: var(--tone-info-border);   background: var(--tone-info-bg); }
+.sgd__icon--ok     { color: var(--tone-ok-text);     border-color: var(--tone-ok-border);     background: var(--tone-ok-bg); }
+
+.sgd__head-text {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+.sgd__title {
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.25;
+}
+.sgd__subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.sgd__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  border-radius: 8px;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.sgd__close:hover { background: var(--color-primary-softer); color: var(--color-primary); }
+
+/* Corps : scroll si trop long */
+.sgd__body {
+  padding: var(--space-5) var(--space-6);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Message central (confirm / alert) */
+.sgd__message {
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  margin: 0;
+}
+.sgd__details {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary-softer);
+  border: 1px solid var(--color-primary-soft);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-field);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Grille de champs (forms) */
+.sgd__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+.sgd__field { display: flex; flex-direction: column; gap: var(--space-2); }
+.sgd__field--full { grid-column: 1 / -1; }
+
+/* Footer collant : actions */
+.sgd__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+}
+.sgd__foot--center { justify-content: center; }
+.sgd__foot--between { justify-content: space-between; }
+.sgd__foot .btn { min-width: 110px; }
+
+/* Variante centrée (confirm/alert) */
+.sgd--centered .sgd__head { flex-direction: column; align-items: center; text-align: center; padding-bottom: 0; background: transparent; border-bottom: none; }
+.sgd--centered .sgd__icon { width: 64px; height: 64px; border-radius: 50%; }
+.sgd--centered .sgd__body { padding-top: var(--space-4); text-align: center; }
+.sgd--centered .sgd__title { font-size: var(--text-xl); }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .sg-dialog--sm,
+  .sg-dialog--md,
+  .sg-dialog--lg,
+  .sg-dialog--xl { width: 100vw !important; max-width: 100vw; }
+
+  .sgd { max-height: 100vh; min-height: 100vh; border-radius: 0; }
+
+  .sgd__head, .sgd__body, .sgd__foot { padding-left: var(--space-4); padding-right: var(--space-4); }
+  .sgd__grid { grid-template-columns: 1fr; }
+  .sgd__foot .btn { flex: 1; min-width: 0; }
+}
+
+/* ============================================================
+   mat-menu — menu d'actions ligne
+============================================================ */
+.sg-row-menu.mat-mdc-menu-panel {
+  min-width: 180px !important;
+  border-radius: var(--radius-field) !important;
+  box-shadow: var(--shadow-3) !important;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+.sg-row-menu .mat-mdc-menu-content { padding: 4px !important; }
+.sg-row-menu .mat-mdc-menu-item {
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  border-radius: 6px;
+  font-size: var(--text-sm) !important;
+  color: var(--color-text) !important;
+}
+.sg-row-menu .mat-mdc-menu-item .mat-mdc-menu-item-text {
+  display: flex; align-items: center; gap: 10px;
+}
+.sg-row-menu .mat-mdc-menu-item:hover {
+  background: var(--color-primary-softer) !important;
+  color: var(--color-primary-dark) !important;
+}
+.sg-row-menu .mat-mdc-menu-item app-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.sg-row-menu__danger.mat-mdc-menu-item {
+  color: var(--color-danger) !important;
+}
+.sg-row-menu__danger.mat-mdc-menu-item:hover {
+  background: var(--tone-danger-bg) !important;
+  color: var(--color-danger) !important;
+}
+.sg-row-menu__danger.mat-mdc-menu-item app-icon { color: var(--color-danger); }
+
+/* Backdrop — couleur charte, apparition rapide */
+.sg-backdrop {
+  background: rgba(14, 41, 31, 0.5);
+  backdrop-filter: blur(2px);
+}
+.cdk-overlay-dark-backdrop { background: rgba(14, 41, 31, 0.5); }

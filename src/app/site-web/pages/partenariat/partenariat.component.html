@@ -1,0 +1,290 @@
+<app-site-page-hero
+  eyebrow="Rejoindre Sory Group"
+  title="Vous êtes producteur de cajou, cacao, café ou karité ?"
+  subtitle="Vendez votre récolte avec un partenaire de confiance. Avances au démarrage, pesées justes, paiement rapide et visibilité sur tous vos chiffres.">
+</app-site-page-hero>
+
+<!-- Avantages -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Les avantages</span>
+      <h2>Pourquoi vendre votre récolte à Sory Group</h2>
+      <p>Nous travaillons main dans la main avec les producteurs de toutes les zones agricoles de Guinée.</p>
+    </div>
+
+    <div class="avantages">
+      @for (a of avantages; track a.titre) {
+        <article class="avantage">
+          <div class="avantage__icon"><app-icon [name]="a.icon" [size]="24" /></div>
+          <h3>{{ a.titre }}</h3>
+          <p>{{ a.desc }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Réseau Sory Group — schéma SVG -->
+<section class="section section--bg">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Le réseau Sory Group</span>
+      <h2>Du champ au client international, avec vous au centre</h2>
+      <p>Faites partie d'un réseau qui transforme votre récolte en valeur reconnue sur le marché mondial.</p>
+    </div>
+
+    <div class="reseau">
+      <svg class="reseau__svg" viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Définitions -->
+        <defs>
+          <linearGradient id="grad-center" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"  stop-color="var(--brand-500)"/>
+            <stop offset="100%" stop-color="var(--brand-800)"/>
+          </linearGradient>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F2018" flood-opacity="0.15"/>
+          </filter>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--brand-500)"/>
+          </marker>
+        </defs>
+
+        <!-- Lignes de connexion : producteurs → centre (branchées au bord r=150) -->
+        <g stroke="var(--brand-300)" stroke-width="2" stroke-dasharray="4 4" fill="none">
+          <path d="M140,100 Q 270,180 335,185" />
+          <path d="M120,260 Q 230,260 290,260" />
+          <path d="M140,420 Q 270,340 335,335" />
+          <path d="M740,100 Q 610,180 545,185" marker-start="url(#arrow)" />
+          <path d="M760,260 Q 650,260 590,260" marker-start="url(#arrow)" />
+          <path d="M740,420 Q 610,340 545,335" marker-start="url(#arrow)" />
+        </g>
+
+        <!-- Producteurs (gauche) -->
+        <g class="r-node r-node--prod">
+          <circle cx="140" cy="100" r="42" fill="white" stroke="var(--brand-500)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="140" y="92" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Producteur</text>
+          <text x="140" y="110" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">cajou · cacao</text>
+        </g>
+        <g class="r-node r-node--prod">
+          <circle cx="120" cy="260" r="42" fill="white" stroke="var(--brand-500)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="120" y="252" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Producteur</text>
+          <text x="120" y="270" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">café · karité</text>
+        </g>
+        <g class="r-node r-node--prod">
+          <circle cx="140" cy="420" r="42" fill="white" stroke="var(--brand-500)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="140" y="412" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Producteur</text>
+          <text x="140" y="430" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">cajou</text>
+        </g>
+
+        <!-- Étiquettes gauche -->
+        <text x="80" y="180" font-family="Roboto" font-size="11" fill="var(--grey-500)" text-anchor="start">1 500+ producteurs</text>
+        <text x="80" y="195" font-family="Roboto" font-size="11" fill="var(--grey-500)" text-anchor="start">12 zones couvertes</text>
+
+        <!-- Centre : logo Sory Group agrandi -->
+        <g class="r-node r-node--center">
+          <!-- Anneau externe pulsant -->
+          <circle cx="440" cy="260" r="150" fill="none" stroke="var(--brand-300)" stroke-width="2" stroke-opacity="0.35" stroke-dasharray="4 8"/>
+          <circle cx="440" cy="260" r="135" fill="url(#grad-center)" filter="url(#shadow)"/>
+          <circle cx="440" cy="260" r="120" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.3"/>
+          <circle cx="440" cy="260" r="100" fill="white"/>
+          <image href="/logo.png" x="360" y="180" width="160" height="160" preserveAspectRatio="xMidYMid meet"/>
+        </g>
+
+        <!-- Acheteurs (droite) -->
+        <g class="r-node r-node--buyer">
+          <circle cx="740" cy="100" r="42" fill="white" stroke="var(--brand-700)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="740" y="92" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Acheteur</text>
+          <text x="740" y="110" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">Europe</text>
+        </g>
+        <g class="r-node r-node--buyer">
+          <circle cx="760" cy="260" r="42" fill="white" stroke="var(--brand-700)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="760" y="252" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Acheteur</text>
+          <text x="760" y="270" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">Asie</text>
+        </g>
+        <g class="r-node r-node--buyer">
+          <circle cx="740" cy="420" r="42" fill="white" stroke="var(--brand-700)" stroke-width="2" filter="url(#shadow)"/>
+          <text x="740" y="412" text-anchor="middle" font-family="Roboto Condensed" font-weight="700" font-size="13" fill="var(--brand-800)">Acheteur</text>
+          <text x="740" y="430" text-anchor="middle" font-family="Roboto" font-size="11" fill="var(--grey-600)">Amérique</text>
+        </g>
+
+        <!-- Étiquettes droite -->
+        <text x="800" y="180" font-family="Roboto" font-size="11" fill="var(--grey-500)" text-anchor="end">Clients internationaux</text>
+        <text x="800" y="195" font-family="Roboto" font-size="11" fill="var(--grey-500)" text-anchor="end">Prix du marché mondial</text>
+
+        <!-- Flèches principales horizontales (apparentes) -->
+        <g stroke="var(--brand-500)" stroke-width="3" fill="none">
+          <path d="M210,260 L280,260" marker-end="url(#arrow)" opacity="0.8"/>
+          <path d="M600,260 L670,260" marker-end="url(#arrow)" opacity="0.8"/>
+        </g>
+
+        <!-- Labels des flèches : valeur ajoutée -->
+        <g font-family="Roboto Condensed" font-weight="600" font-size="11" fill="var(--brand-700)" text-anchor="middle">
+          <text x="245" y="248">RÉCOLTE</text>
+          <text x="245" y="282">kg · prix du jour</text>
+          <text x="635" y="248">PRODUIT FINI</text>
+          <text x="635" y="282">kg · prix export</text>
+        </g>
+      </svg>
+
+      <!-- Légende -->
+      <div class="reseau__legend">
+        <div class="reseau__legend-item"><span class="reseau__dot reseau__dot--prod"></span> Producteurs : votre récolte entre dans le réseau</div>
+        <div class="reseau__legend-item"><span class="reseau__dot reseau__dot--center"></span> Sory Group : nous ajoutons de la valeur (collecte, qualité, export)</div>
+        <div class="reseau__legend-item"><span class="reseau__dot reseau__dot--buyer"></span> Acheteurs internationaux : meilleur prix pour vous</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Étapes pour rejoindre -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Comment ça marche</span>
+      <h2>Rejoignez le réseau en 4 étapes</h2>
+    </div>
+    <ol class="process">
+      @for (e of etapes; track e.num) {
+        <li class="process__item">
+          <span class="process__num">{{ e.num }}</span>
+          <h3>{{ e.titre }}</h3>
+          <p>{{ e.desc }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Formulaire -->
+<section id="form" class="section section--bg">
+  <div class="container">
+    <div class="contact">
+      <aside class="contact__text">
+        <span class="section__eyebrow">S'inscrire</span>
+        <h2>Formulaire d'inscription producteur</h2>
+        <p>Remplissez ce formulaire pour qu'un superviseur Sory Group vous contacte et planifie une visite de vos champs.</p>
+
+        <ul class="contact__info">
+          <li><app-icon name="phone"   [size]="18" /> <span>+224 620 00 00 00</span></li>
+          <li><app-icon name="mail"    [size]="18" /> <span>producteurs&#64;sorygroup.com</span></li>
+          <li><app-icon name="map-pin" [size]="18" /> <span>Km 36, route de Kindia, Conakry</span></li>
+        </ul>
+
+        <div class="contact__admin">
+          <app-icon name="lock" [size]="14" />
+          <span>Déjà producteur Sory Group ? <a [routerLink]="paths.auth">Mon espace</a></span>
+        </div>
+      </aside>
+
+      <form class="contact__form" (ngSubmit)="submit()">
+        @if (sent()) {
+          <div class="contact__sent">
+            <div class="contact__sent-icon"><app-icon name="check" [size]="32" /></div>
+            <h3>Merci {{ prenom() || 'producteur' }} !</h3>
+            <p>Un superviseur Sory Group vous appellera sous 72 heures au numéro <strong>{{ telephone() }}</strong>.</p>
+          </div>
+        } @else {
+          <div class="contact__grid">
+            <div class="field">
+              <label class="field__label field__label--required">Prénom</label>
+              <input class="field__input" [value]="prenom()" (input)="prenom.set($any($event.target).value)" />
+            </div>
+            <div class="field">
+              <label class="field__label field__label--required">Nom</label>
+              <input class="field__input" [value]="nom()" (input)="nom.set($any($event.target).value)" />
+            </div>
+
+            <div class="field field--full">
+              <label class="field__label field__label--required">Téléphone</label>
+              <input type="tel" class="field__input" [value]="telephone()"
+                     (input)="telephone.set($any($event.target).value)"
+                     placeholder="620 00 00 00" />
+              <div class="field__hint">Notre superviseur vous appellera sur ce numéro.</div>
+            </div>
+
+            <div class="field">
+              <label class="field__label field__label--required">Village</label>
+              <input class="field__input" [value]="village()" (input)="village.set($any($event.target).value)"
+                     placeholder="ex. Kolaboui" />
+            </div>
+            <div class="field">
+              <label class="field__label">Préfecture / Zone</label>
+              <select class="field__input" [value]="prefecture()" (change)="prefecture.set($any($event.target).value)">
+                <option value="" disabled>— Choisir —</option>
+                <option value="Boke">Boké</option>
+                <option value="Kindia">Kindia</option>
+                <option value="Mamou">Mamou</option>
+                <option value="Labe">Labé</option>
+                <option value="Faranah">Faranah</option>
+                <option value="Kankan">Kankan</option>
+                <option value="Nzerekore">Nzérékoré</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label field__label--required">Culture principale</label>
+              <select class="field__input" [value]="produit()" (change)="produit.set($any($event.target).value)">
+                <option value="" disabled>— Choisir votre produit —</option>
+                <option value="cajou">Cajou (noix de cajou brute)</option>
+                <option value="cacao">Cacao</option>
+                <option value="cafe">Café</option>
+                <option value="karite">Karité</option>
+                <option value="mixte">Plusieurs cultures</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label">Années d'expérience</label>
+              <select class="field__input" [value]="experience()" (change)="experience.set($any($event.target).value)">
+                <option value="" disabled>— Choisir —</option>
+                <option value="0-2">Moins de 2 ans</option>
+                <option value="2-5">2 à 5 ans</option>
+                <option value="5-10">5 à 10 ans</option>
+                <option value="10+">Plus de 10 ans</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label">Surface cultivée</label>
+              <div class="sgd__input-wrap">
+                <input type="number" class="field__input" min="0" step="0.1"
+                       [value]="surface()" (input)="surface.set($any($event.target).value)"
+                       placeholder="0" />
+                <span class="sgd__unite">ha</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field__label">Récolte estimée</label>
+              <div class="sgd__input-wrap">
+                <input type="number" class="field__input" min="0" step="10"
+                       [value]="quantite()" (input)="quantite.set($any($event.target).value)"
+                       placeholder="0" />
+                <span class="sgd__unite">kg / an</span>
+              </div>
+            </div>
+
+            <div class="field field--full">
+              <label class="field__label">Commentaire (optionnel)</label>
+              <textarea class="field__input" rows="3"
+                        [value]="message()" (input)="message.set($any($event.target).value)"
+                        placeholder="Dites-nous tout ce qui peut nous aider à bien préparer votre visite."></textarea>
+            </div>
+
+            <div class="field field--full">
+              <label class="contact__check">
+                <input type="checkbox" [checked]="accept()" (change)="accept.set($any($event.target).checked)" />
+                <span>J'accepte d'être contacté par un superviseur Sory Group SARLU au sujet de ma demande.</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg contact__submit" [disabled]="loading()">
+            @if (loading()) { <span>Envoi…</span> }
+            @else { <app-icon name="check" [size]="18" /> <span>Envoyer ma demande</span> }
+          </button>
+        }
+      </form>
+    </div>
+  </div>
+</section>

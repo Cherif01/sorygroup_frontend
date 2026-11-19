@@ -1,0 +1,94 @@
+<div class="sgd">
+  <header class="sgd__head">
+    <div class="sgd__icon">
+      <app-icon [name]="data.icon ?? 'edit'" [size]="20" />
+    </div>
+    <div class="sgd__head-text">
+      <h3 class="sgd__title">{{ data.title }}</h3>
+      @if (data.subtitle) {
+        <p class="sgd__subtitle">{{ data.subtitle }}</p>
+      }
+    </div>
+    <button type="button" class="sgd__close" (click)="cancel()" aria-label="Fermer">
+      <app-icon name="x" [size]="18" />
+    </button>
+  </header>
+
+  <form class="sgd__body" (ngSubmit)="submit()" autocomplete="off">
+    <div class="sgd__grid">
+      @for (f of data.fields; track trackField($index, f)) {
+        <div class="sgd__field" [class.sgd__field--full]="(f.cols ?? 2) === 1">
+          @if (f.type !== 'checkbox') {
+            <label class="field__label" [class.field__label--required]="f.required">
+              {{ f.label }}
+            </label>
+          }
+
+          @switch (f.type) {
+            @case ('textarea') {
+              <textarea class="field__input" rows="4"
+                        [placeholder]="placeholderFor(f)"
+                        [disabled]="f.disabled ?? false"
+                        [value]="values()[f.key] ?? ''"
+                        (input)="setValue(f.key, $any($event.target).value)"></textarea>
+            }
+            @case ('select') {
+              <select class="field__input"
+                      [disabled]="f.disabled ?? false"
+                      [value]="values()[f.key] ?? ''"
+                      (change)="setValue(f.key, $any($event.target).value)">
+                <option value="" disabled>{{ f.placeholder ?? '— Choisir —' }}</option>
+                @for (opt of f.options; track opt.value) {
+                  <option [value]="opt.value">{{ opt.label }}</option>
+                }
+              </select>
+            }
+            @case ('checkbox') {
+              <label class="sgd__check">
+                <input type="checkbox"
+                       [checked]="values()[f.key] ?? false"
+                       (change)="setValue(f.key, $any($event.target).checked)" />
+                <span class="sgd__check-text">
+                  <strong>{{ f.label }}</strong>
+                  @if (f.hint) { <small>{{ f.hint }}</small> }
+                </span>
+              </label>
+            }
+            @default {
+              <div class="sgd__input-wrap">
+                <input [type]="f.type"
+                       class="field__input"
+                       [placeholder]="placeholderFor(f)"
+                       [disabled]="f.disabled ?? false"
+                       [min]="f.min ?? null"
+                       [max]="f.max ?? null"
+                       [step]="f.step ?? null"
+                       [value]="values()[f.key] ?? ''"
+                       (input)="setValue(f.key, $any($event.target).value)" />
+                @if (f.unite) { <span class="sgd__unite">{{ f.unite }}</span> }
+              </div>
+            }
+          }
+
+          @if (errors()[f.key]) {
+            <div class="field__error">{{ errors()[f.key] }}</div>
+          } @else if (f.hint && f.type !== 'checkbox') {
+            <div class="field__hint">{{ f.hint }}</div>
+          }
+        </div>
+      }
+    </div>
+  </form>
+
+  <footer class="sgd__foot">
+    <button type="button" class="btn btn--secondary" (click)="cancel()">
+      {{ data.cancelLabel ?? 'Annuler' }}
+    </button>
+    <button type="button" class="btn" [class]="data.tone === 'danger' ? 'btn--danger' : 'btn--primary'"
+            [disabled]="!isValid()"
+            (click)="submit()">
+      <app-icon name="check" [size]="14" />
+      {{ data.submitLabel ?? 'Enregistrer' }}
+    </button>
+  </footer>
+</div>

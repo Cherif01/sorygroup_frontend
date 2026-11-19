@@ -1,0 +1,28 @@
+// ============================================================
+// THEME — TYPOGRAPHIE
+// ============================================================
+
+:root {
+  --font-text: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-title: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --text-xs:  12px;
+  --text-sm:  14px;
+  --text-md:  16px;
+  --text-lg:  20px;
+  --text-xl:  24px;
+  --text-2xl: 32px;
+  --text-3xl: 40px;
+  --text-4xl: 48px;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+  --weight-bold:    700;
+}

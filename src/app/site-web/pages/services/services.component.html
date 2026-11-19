@@ -1,0 +1,36 @@
+<app-site-page-hero
+  eyebrow="Nos services"
+  title="Huit applications métier, une seule plateforme"
+  subtitle="Chaque module couvre une mission précise. Vous choisissez ce dont vous avez besoin aujourd'hui, et nous ajoutons les autres à mesure que vous grandissez.">
+</app-site-page-hero>
+
+<section class="section section--light">
+  <div class="container">
+    <div class="services">
+      @for (s of services; track s.title) {
+        <article class="service service--detailed">
+          <div class="service__icon"><app-icon [name]="s.icon" [size]="24" /></div>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+          <ul class="service__points">
+            @for (p of s.points; track p) {
+              <li><app-icon name="check" [size]="14" /> {{ p }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta__inner">
+    <div>
+      <h2>Un service ne figure pas dans la liste ?</h2>
+      <p>Nous étudions toutes les demandes sur mesure.</p>
+    </div>
+    <a routerLink="/site-web/partenariat" class="btn btn--primary btn--lg">
+      <app-icon name="mail" [size]="18" /> Nous écrire
+    </a>
+  </div>
+</section>

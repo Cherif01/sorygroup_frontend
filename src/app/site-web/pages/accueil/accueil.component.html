@@ -1,0 +1,171 @@
+<!-- =================== HERO : CAROUSEL 90VH =================== -->
+<section class="hero">
+  <div class="hero__slides">
+    @for (slide of slides(); track slide; let i = $index) {
+      <div class="hero__slide" [class.is-active]="current() === i"
+           [style.background-image]="'url(' + slide + ')'"></div>
+    }
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <span class="hero__eyebrow">Chaîne agricole — Guinée</span>
+    <h1 class="hero__title">
+      <span class="hero__title-word">SORY</span>
+      <span class="hero__title-word hero__title-word--2">GROUP</span>
+      <span class="hero__title-word hero__title-word--3">SARLU</span>
+    </h1>
+    <p class="hero__tagline">
+      Du champ à l'export : traçabilité complète pour le cajou, le cacao, le café et le karité.
+    </p>
+    <div class="hero__cta">
+      <a routerLink="/site-web/partenariat" class="btn btn--primary btn--lg">
+        <app-icon name="user" [size]="18" /> Devenir partenaire
+      </a>
+      <a routerLink="/site-web/services" class="btn btn--lg hero__cta-ghost">
+        Nos services
+        <app-icon name="chevron-right" [size]="16" />
+      </a>
+    </div>
+
+    <div class="hero__dots">
+      @for (slide of slides(); track slide; let i = $index) {
+        <button type="button"
+                class="hero__dot"
+                [class.is-active]="current() === i"
+                [attr.aria-label]="'Slide ' + (i + 1)"
+                (click)="goTo(i)"></button>
+      }
+    </div>
+  </div>
+
+  <div class="hero__scroll" (click)="scrollTo('about')">
+    <span>Défiler</span>
+    <app-icon name="chevron-down" [size]="16" />
+  </div>
+
+  <!-- Texte vertical -->
+  <div class="hero__vmark" aria-hidden="true">PARTENARIAT OUVERT</div>
+</section>
+
+<!-- =================== FLUX : chevauche le bas du hero =================== -->
+<section class="flux-strip">
+  <div class="container">
+    <div class="flux-strip__head">
+      <span class="flux-strip__eyebrow">Du champ à l'export</span>
+      <h2>Chaque kilo suit un parcours rigoureux et tracé</h2>
+    </div>
+
+    <div class="flux">
+      <!-- SVG : flèches animées au-dessus des cartes -->
+      <svg class="flux__arrows" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <marker id="flux-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--brand-500)"/>
+          </marker>
+        </defs>
+        <path class="flux__path" d="M50,40 Q 300,10 600,40 T 1150,40"
+              fill="none" stroke="var(--brand-500)" stroke-width="2"
+              stroke-dasharray="6 6" marker-end="url(#flux-arrow)"/>
+      </svg>
+
+      <div class="flux__cards">
+        @for (f of flux; track f.num; let i = $index) {
+          <article class="flux-card" [style.animation-delay]="(i * 100) + 'ms'">
+            <div class="flux-card__num">{{ f.num }}</div>
+            <div class="flux-card__icon"><app-icon [name]="f.icon" [size]="22" /></div>
+            <h3 class="flux-card__title">{{ f.titre }}</h3>
+            <span class="flux-card__sub">{{ f.sub }}</span>
+            <p class="flux-card__desc">{{ f.desc }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CHIFFRES =================== -->
+<section id="about" class="section section--light">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Qui sommes-nous</span>
+      <h2>Une plateforme intégrée, du champ jusqu'à l'export</h2>
+      <p>Sory Group SARLU accompagne 1 500+ producteurs guinéens et pilote l'ensemble de la chaîne agricole sur une seule application.</p>
+    </div>
+
+    <div class="numbers">
+      @for (c of chiffres; track c.label) {
+        <div class="numbers__item">
+          <strong>{{ c.value }}</strong>
+          <span>{{ c.label }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="section__cta">
+      <a routerLink="/site-web/apropos" class="btn btn--secondary btn--lg">
+        En savoir plus <app-icon name="chevron-right" [size]="14" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SERVICES (aperçu) =================== -->
+<section class="section section--bg">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Nos services</span>
+      <h2>Tout ce qu'il faut pour piloter une filière agricole</h2>
+      <p>Huit applications métier, livrées par étapes, qui se complètent pour couvrir toute la chaîne.</p>
+    </div>
+
+    <div class="services">
+      @for (s of services; track s.title) {
+        <article class="service">
+          <div class="service__icon"><app-icon [name]="s.icon" [size]="24" /></div>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+        </article>
+      }
+    </div>
+
+    <div class="section__cta">
+      <a routerLink="/site-web/services" class="btn btn--primary btn--lg">
+        Voir tous nos services <app-icon name="chevron-right" [size]="14" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== PROCESS =================== -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Fonctionnement</span>
+      <h2>Du champ à la vente, en quatre étapes</h2>
+    </div>
+
+    <ol class="process">
+      @for (e of etapes; track e.num) {
+        <li class="process__item">
+          <span class="process__num">{{ e.num }}</span>
+          <h3>{{ e.titre }}</h3>
+          <p>{{ e.desc }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- =================== CTA BANDEAU =================== -->
+<section class="cta">
+  <div class="container cta__inner">
+    <div>
+      <h2>Prêt à moderniser votre filière ?</h2>
+      <p>Contactez-nous pour une démonstration personnalisée.</p>
+    </div>
+    <a routerLink="/site-web/partenariat" class="btn btn--primary btn--lg">
+      <app-icon name="handshake" [size]="18" /> Devenir partenaire
+    </a>
+  </div>
+</section>

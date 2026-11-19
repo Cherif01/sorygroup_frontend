@@ -1,0 +1,86 @@
+<header class="site-nav" [class.is-scrolled]="scrolled()">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" routerLink="/site-web/home">
+      <span class="site-nav__logo"><img src="logo.png" alt="Sory Group" /></span>
+      <span class="site-nav__name">
+        <strong>SORY GROUP</strong>
+        <small>SARLU</small>
+      </span>
+    </a>
+
+    <nav class="site-nav__links" [class.is-open]="mobileOpen()">
+      <a routerLink="/site-web/home" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobile()">Accueil</a>
+      <a routerLink="/site-web/services" routerLinkActive="is-active" (click)="closeMobile()">Services</a>
+      <a routerLink="/site-web/apropos" routerLinkActive="is-active" (click)="closeMobile()">À propos</a>
+      <a routerLink="/site-web/projets" routerLinkActive="is-active" (click)="closeMobile()">Projets</a>
+      <a routerLink="/site-web/partenariat" routerLinkActive="is-active" (click)="closeMobile()">Partenariat</a>
+    </nav>
+
+    <div class="site-nav__actions">
+      <a [routerLink]="paths.auth" class="site-nav__admin">
+        <app-icon name="lock" [size]="14" /> Administration
+      </a>
+      <button type="button" class="site-nav__burger" (click)="toggleMobile()" [attr.aria-label]="'Menu'">
+        <app-icon [name]="mobileOpen() ? 'x' : 'menu'" [size]="22" />
+      </button>
+    </div>
+  </div>
+</header>
+
+@if (mobileOpen()) {
+  <div class="site-nav__overlay" (click)="closeMobile()"></div>
+}
+
+<main class="site-main"><router-outlet /></main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__col">
+      <div class="site-footer__brand">
+        <span class="site-footer__logo"><img src="logo.png" alt="" /></span>
+        <div>
+          <strong>SORY GROUP SARLU</strong>
+          <small>Chaîne agricole — Conakry, Guinée</small>
+        </div>
+      </div>
+      <p class="site-footer__about">
+        Plateforme intégrée pour la gestion de la chaîne agricole : collecte, traitement, vente et export du cajou, cacao, café et karité.
+      </p>
+    </div>
+
+    <div class="site-footer__col">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a routerLink="/site-web/home">Accueil</a></li>
+        <li><a routerLink="/site-web/services">Services</a></li>
+        <li><a routerLink="/site-web/apropos">À propos</a></li>
+        <li><a routerLink="/site-web/projets">Projets</a></li>
+        <li><a routerLink="/site-web/partenariat">Partenariat</a></li>
+      </ul>
+    </div>
+
+    <div class="site-footer__col">
+      <h5>Contact</h5>
+      <ul class="site-footer__contact">
+        <li><app-icon name="map-pin" [size]="14" /> Km 36, route de Kindia, Conakry</li>
+        <li><app-icon name="phone" [size]="14" /> +224 620 00 00 00</li>
+        <li><app-icon name="mail" [size]="14" /> contact&#64;sorygroup.com</li>
+      </ul>
+    </div>
+
+    <div class="site-footer__col">
+      <h5>Espace interne</h5>
+      <p class="site-footer__internal">Vous êtes un collaborateur ? Accédez à l'application de gestion.</p>
+      <a [routerLink]="paths.auth" class="btn btn--secondary site-footer__cta">
+        <app-icon name="lock" [size]="14" /> Administration
+      </a>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="container site-footer__bottom-inner">
+      <small>© {{ year }} Sory Group SARLU — Tous droits réservés</small>
+      <small>Conception interne · Conakry · Guinée</small>
+    </div>
+  </div>
+</footer>

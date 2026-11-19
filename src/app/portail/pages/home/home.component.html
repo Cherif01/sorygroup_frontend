@@ -1,0 +1,66 @@
+<div class="portal-home">
+  <div class="container">
+
+    <!-- Profile compact -->
+    <section class="profile">
+      <div class="profile__avatar">{{ auth.currentUser()?.initiales ?? 'SG' }}</div>
+      <div class="profile__text">
+        <strong>{{ auth.currentUser()?.prenom }} {{ auth.currentUser()?.nom }}</strong>
+        <small>{{ auth.currentUser()?.role?.libelle }} · {{ auth.currentUser()?.telephone }}</small>
+      </div>
+      <a routerLink="/site-web/home" class="profile__link" target="_blank" rel="noopener">
+        <app-icon name="globe" [size]="14" />
+        <span>Site public</span>
+      </a>
+    </section>
+
+    <!-- Applications -->
+    <section class="apps">
+      <header class="apps__head">
+        <h2>Vos applications</h2>
+        <p>Choisissez l'application qui vous intéresse</p>
+      </header>
+
+      <div class="apps__grid">
+        @for (m of tiles(); track m.id) {
+          @if (m.status === 'open') {
+            <a class="tile tile--{{ m.accent }}" [routerLink]="m.path">
+              <div class="tile__glow"></div>
+              <div class="tile__head">
+                <div class="tile__icon"><app-icon [name]="m.icon" [size]="24" /></div>
+                <span class="pill pill--ok">Disponible</span>
+              </div>
+              <div class="tile__body">
+                <h3 class="tile__title">{{ m.label }}</h3>
+                <p class="tile__desc">{{ m.description }}</p>
+              </div>
+              <div class="tile__foot">
+                <span class="tile__cta">
+                  Ouvrir
+                  <app-icon name="chevron-right" [size]="16" />
+                </span>
+              </div>
+            </a>
+          } @else {
+            <div class="tile tile--soon tile--{{ m.accent }}">
+              <div class="tile__head">
+                <div class="tile__icon"><app-icon [name]="m.icon" [size]="24" /></div>
+                <span class="pill pill--wait">Bientôt</span>
+              </div>
+              <div class="tile__body">
+                <h3 class="tile__title">{{ m.label }}</h3>
+                <p class="tile__desc">{{ m.description }}</p>
+              </div>
+              <div class="tile__foot">
+                <span class="tile__cta tile__cta--disabled">
+                  Non disponible
+                </span>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

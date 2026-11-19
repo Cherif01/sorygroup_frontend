@@ -1,0 +1,111 @@
+// ============================================================
+// THEME — COULEURS
+// Fichier UNIQUE pour repeindre toute l'application.
+// Change `--brand-*` pour muter la couleur de marque ; les rôles
+// (--color-*) sont dérivés, donc l'app entière suit.
+// ============================================================
+
+:root {
+  // ---- Palette de marque (modifier ici = app entière recolorée) ----
+  --brand-950: #0F2018;
+  --brand-900: #14291F;
+  --brand-850: #17382A;
+  --brand-800: #1C4330;
+  --brand-700: #185A3B;
+  --brand-600: #1F6F4A;   // couleur de marque principale
+  --brand-500: #2F8F63;
+  --brand-400: #5CB08A;
+  --brand-300: #A7DDBF;
+  --brand-200: #B9D8C6;
+  --brand-100: #E4F0E9;
+  --brand-50:  #F1F7F3;
+
+  // ---- Encre et gris (teintés très légèrement vers la marque) ----
+  --ink-900:  #1A201C;
+  --grey-800: #2B332E;
+  --grey-700: #3A423D;
+  --grey-600: #56605A;
+  --grey-500: #66706A;
+  --grey-400: #848D87;
+  --grey-300: #B4BCB7;
+  --grey-200: #D8DDD9;
+  --grey-150: #E5E9E6;
+  --grey-100: #EEF1EE;
+  --grey-50:  #F6F7F5;
+  --white:    #FFFFFF;
+
+  // ---- Accents sémantiques ----
+  --accent-800: #6B4700;
+  --accent-600: #B0760A;
+  --accent-500: #D99A1C;
+  --accent-200: #EFD79F;
+  --accent-50:  #FBF3DE;
+
+  --danger-700: #9F2D20;
+  --danger-600: #C0392B;
+  --danger-200: #EFC2BB;
+  --danger-50:  #FCECE9;
+
+  --info-700: #1E5B8C;
+  --info-600: #2A70AD;
+  --info-200: #BCD5EA;
+  --info-50:  #EAF2F9;
+
+  // ============================================================
+  // RÔLES — les composants n'utilisent QUE ces variables.
+  // ============================================================
+  --color-bg: var(--grey-50);
+  --color-surface: var(--white);
+  --color-surface-alt: var(--grey-50);
+  --color-text: var(--ink-900);
+  --color-text-muted: var(--grey-600);
+  --color-text-subtle: var(--grey-500);
+  --color-text-on-dark: var(--white);
+  --color-text-on-dark-muted: var(--brand-300);
+
+  --color-border: var(--grey-200);
+  --color-border-strong: var(--grey-300);
+  --color-divider: var(--grey-150);
+  --color-field-border: var(--grey-400);
+
+  --color-primary: var(--brand-600);
+  --color-primary-hover: var(--brand-700);
+  --color-primary-dark: var(--brand-800);
+  --color-primary-soft: var(--brand-100);
+  --color-primary-softer: var(--brand-50);
+  --color-on-primary: var(--white);
+  --color-link: var(--brand-600);
+  --color-focus: var(--brand-600);
+
+  --color-danger: var(--danger-600);
+  --color-info: var(--info-600);
+  --color-accent: var(--accent-500);
+
+  // Barre haute / bas
+  --color-topbar-bg: var(--brand-900);
+  --color-topbar-hover: var(--brand-800);
+  --color-sidebar-bg: var(--brand-900);
+  --color-sidebar-hover: var(--brand-800);
+  --color-sidebar-active: var(--brand-700);
+  --color-sidebar-text: var(--white);
+  --color-sidebar-text-muted: var(--brand-300);
+
+  // Tableau
+  --color-table-head: var(--grey-100);
+  --color-row-hover: var(--brand-50);
+  --color-total-bg: var(--accent-50);
+  --color-total-border: var(--accent-600);
+
+  // Pastilles de statut
+  --tone-neutral-text: var(--grey-700);   --tone-neutral-bg: var(--grey-100);  --tone-neutral-border: var(--grey-200);
+  --tone-info-text:    var(--info-700);   --tone-info-bg:    var(--info-50);   --tone-info-border:    var(--info-200);
+  --tone-wait-text:    var(--accent-800); --tone-wait-bg:    var(--accent-50); --tone-wait-border:    var(--accent-200);
+  --tone-ok-text:      var(--brand-700);  --tone-ok-bg:      var(--brand-100); --tone-ok-border:      var(--brand-200);
+  --tone-danger-text:  var(--danger-700); --tone-danger-bg:  var(--danger-50); --tone-danger-border:  var(--danger-200);
+  --tone-off-text:     var(--grey-600);   --tone-off-bg:     var(--white);     --tone-off-border:     var(--grey-200);
+
+  // Données (graphiques)
+  --color-data-main: var(--brand-600);
+  --color-data-accent: var(--accent-600);
+  --color-data-neutral: var(--grey-500);
+}

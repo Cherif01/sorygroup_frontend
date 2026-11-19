@@ -1,0 +1,109 @@
+<header class="navbar">
+  <div class="navbar__left">
+    <button type="button" class="navbar__burger navbar__burger--mobile" (click)="toggleMobile()" aria-label="Menu">
+      <app-icon name="menu" [size]="22" />
+    </button>
+    <button type="button" class="navbar__burger navbar__burger--desktop" (click)="toggleSidebar()" aria-label="Réduire le menu">
+      <app-icon name="menu" [size]="22" />
+    </button>
+
+    <a class="navbar__brand" [routerLink]="paths.portail">
+      <span class="navbar__logo"><img src="logo.png" alt="" /></span>
+      <span class="navbar__name">
+        <strong>{{ appName }}</strong>
+        <small>{{ appTagline }}</small>
+      </span>
+    </a>
+
+    @if (moduleOpen(); as mod) {
+      <span class="navbar__sep">/</span>
+      <span class="navbar__module">
+        <app-icon [name]="mod.icon" [size]="16" />
+        {{ mod.label }}
+      </span>
+    }
+  </div>
+
+  <div class="navbar__right">
+    <!-- Notifications -->
+    <div class="navbar__notif">
+      <button type="button" class="navbar__btn" (click)="toggleNotif()" aria-label="Notifications">
+        <app-icon name="bell" [size]="20" />
+        @if (unread() > 0) {
+          <span class="navbar__badge">{{ unread() }}</span>
+        }
+      </button>
+      @if (notifOpen()) {
+        <div class="navbar__dropdown navbar__dropdown--wide">
+          <div class="navbar__dropdown-head">
+            <strong>Notifications</strong>
+            @if (unread() > 0) {
+              <button type="button" class="link" (click)="markAllRead()">Tout marquer lu</button>
+            }
+          </div>
+          <ul class="navbar__notif-list">
+            @for (n of notifications(); track n.id) {
+              <li class="navbar__notif-item" [class.is-unread]="!n.read">
+                <div class="navbar__notif-dot" [class.is-unread]="!n.read"></div>
+                <div>
+                  <div class="navbar__notif-title">{{ n.title }}</div>
+                  <div class="navbar__notif-desc">{{ n.description }}</div>
+                  <div class="navbar__notif-time">{{ n.time }}</div>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <!-- Site public -->
+    <a routerLink="/site-web/home" class="navbar__site" target="_blank" rel="noopener" title="Voir le site public">
+      <app-icon name="globe" [size]="14" />
+      <span>Site public</span>
+    </a>
+
+    <!-- Toutes les applications -->
+    @if (auth.modules().length > 1) {
+      <a [routerLink]="paths.portail" class="navbar__btn navbar__btn--link" title="Toutes les applications">
+        <app-icon name="layout-dashboard" [size]="20" />
+      </a>
+    }
+
+    <!-- Profile -->
+    <div class="navbar__account">
+      <button type="button" class="navbar__profile" (click)="toggleAccount()">
+        <span class="navbar__avatar">{{ auth.currentUser()?.initiales ?? 'SG' }}</span>
+        <span class="navbar__profile-text">
+          <strong>{{ auth.currentUser()?.prenom }} {{ auth.currentUser()?.nom }}</strong>
+          <small>{{ auth.currentUser()?.role?.libelle }}</small>
+        </span>
+        <app-icon name="chevron-down" [size]="16" />
+      </button>
+
+      @if (accountOpen()) {
+        <div class="navbar__dropdown">
+          <div class="navbar__profile-head">
+            <span class="navbar__avatar navbar__avatar--lg">{{ auth.currentUser()?.initiales ?? 'SG' }}</span>
+            <div>
+              <div class="navbar__profile-name">{{ auth.currentUser()?.prenom }} {{ auth.currentUser()?.nom }}</div>
+              <div class="navbar__profile-role">{{ auth.currentUser()?.role?.libelle }}</div>
+              <div class="navbar__profile-phone">{{ auth.currentUser()?.telephone }}</div>
+            </div>
+          </div>
+          <div class="navbar__dropdown-divider"></div>
+          <a class="navbar__dropdown-item" [routerLink]="paths.motDePasse">
+            <app-icon name="lock" [size]="16" /> Changer le mot de passe
+          </a>
+          <a class="navbar__dropdown-item" [routerLink]="paths.portail">
+            <app-icon name="home" [size]="16" /> Portail
+          </a>
+          <div class="navbar__dropdown-divider"></div>
+          <button type="button" class="navbar__dropdown-item navbar__dropdown-item--danger" (click)="logout()">
+            <app-icon name="log-out" [size]="16" /> Déconnexion
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</header>

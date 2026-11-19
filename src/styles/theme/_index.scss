@@ -1,0 +1,12 @@
+// ============================================================
+// THEME — point d'entrée unique
+// Pour repeindre toute l'application, éditer `_colors.scss` :
+// seul le fichier des couleurs porte la marque, tout le reste suit.
+// ============================================================
+
+@forward 'colors';
+@forward 'typography';
+@forward 'spacing';
+@forward 'shape';
+@forward 'layout';
+@forward 'motion';

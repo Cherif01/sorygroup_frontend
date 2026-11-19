@@ -1,0 +1,96 @@
+<app-site-page-hero
+  eyebrow="À propos"
+  title="Nous construisons la chaîne agricole guinéenne"
+  subtitle="Depuis 2015, Sory Group SARLU accompagne producteurs, coopératives et négociants dans la structuration de la filière cajou, cacao, café et karité.">
+</app-site-page-hero>
+
+<!-- Mission -->
+<section class="section section--light">
+  <div class="container">
+    <div class="mission">
+      <div class="mission__text">
+        <span class="section__eyebrow">Notre mission</span>
+        <h2>Donner aux producteurs guinéens les outils d'une agriculture tracée, rentable et durable.</h2>
+        <p>Nous combinons une connaissance fine du terrain guinéen à une plateforme technologique qui répond aux exigences des acheteurs internationaux. Du champ à l'export, chaque kilo compte.</p>
+        <p>Notre équipe se déplace sur le terrain pour former chaque superviseur, chaque responsable de dépôt, chaque comptable.</p>
+      </div>
+      <div class="mission__card">
+        <span class="section__eyebrow">Chiffres clés</span>
+        <ul>
+          <li><strong>1 500+</strong><span>Producteurs suivis</span></li>
+          <li><strong>4</strong><span>Produits (cajou, cacao, café, karité)</span></li>
+          <li><strong>12</strong><span>Zones couvertes</span></li>
+          <li><strong>8</strong><span>Applications métier</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Valeurs -->
+<section class="section section--bg">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Nos valeurs</span>
+      <h2>Quatre principes qui guident chacune de nos décisions</h2>
+    </div>
+    <div class="valeurs">
+      @for (v of valeurs; track v.titre) {
+        <article class="valeur">
+          <div class="valeur__icon"><app-icon [name]="v.icon" [size]="24" /></div>
+          <h3>{{ v.titre }}</h3>
+          <p>{{ v.desc }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Histoire / Timeline -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">Notre histoire</span>
+      <h2>10 ans au service de la filière guinéenne</h2>
+    </div>
+    <ol class="timeline">
+      @for (j of jalons; track j.annee) {
+        <li class="timeline__item">
+          <span class="timeline__year">{{ j.annee }}</span>
+          <div class="timeline__text">{{ j.evenement }}</div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Équipe -->
+<section class="section section--bg">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="section__eyebrow">L'équipe</span>
+      <h2>Des femmes et des hommes engagés</h2>
+    </div>
+    <div class="team">
+      @for (m of equipe; track m.nom) {
+        <article class="team__member">
+          <div class="team__avatar">{{ m.initiales }}</div>
+          <strong>{{ m.nom }}</strong>
+          <small>{{ m.poste }}</small>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta__inner">
+    <div>
+      <h2>Vous partagez notre vision ?</h2>
+      <p>Rejoignez nos partenaires et bâtissons ensemble.</p>
+    </div>
+    <a routerLink="/site-web/partenariat" class="btn btn--primary btn--lg">
+      <app-icon name="handshake" [size]="18" /> Devenir partenaire
+    </a>
+  </div>
+</section>

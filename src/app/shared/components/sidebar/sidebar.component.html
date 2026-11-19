@@ -1,0 +1,102 @@
+<aside class="sidebar"
+       [class.is-collapsed]="menu.collapsed()"
+       [class.is-mobile-open]="menu.mobileOpen()">
+
+  <!-- Entête interne : module ouvert -->
+  <div class="sidebar__head">
+    @if (activeModule(); as mod) {
+      <div class="sidebar__head-icon"><app-icon [name]="mod.icon" [size]="20" /></div>
+      <div class="sidebar__head-text">
+        <div class="sidebar__head-label">{{ mod.label }}</div>
+        <div class="sidebar__head-sub">{{ mod.description }}</div>
+      </div>
+    }
+    <button type="button" class="sidebar__close" (click)="closeMobile()" aria-label="Fermer">
+      <app-icon name="x" [size]="20" />
+    </button>
+  </div>
+
+  <!-- Recherche (visible si menu non réduit) -->
+  @if (!menu.collapsed()) {
+    <div class="sidebar__search">
+      <app-icon name="search" [size]="16" />
+      <input type="search"
+             placeholder="Rechercher…"
+             [value]="search()"
+             (input)="search.set($any($event.target).value)" />
+    </div>
+  }
+
+  <!-- Navigation -->
+  <nav class="sidebar__nav" aria-label="Menu du module">
+    @for (section of filteredSections(); track trackSection($index, section)) {
+      <div class="sidebar__section" [class.is-no-title]="!section.title">
+
+        @if (section.title && !menu.collapsed()) {
+          <button type="button" class="sidebar__section-title"
+                  [attr.aria-expanded]="isOpen(section)"
+                  (click)="toggle(section.id)">
+            <span>{{ section.title }}</span>
+            <app-icon name="chevron-down" [size]="14" />
+          </button>
+        }
+
+        @if (isOpen(section)) {
+          <ul class="sidebar__list">
+            @for (item of section.items; track trackItem($index, item)) {
+              <li class="sidebar__list-item"
+                  [class.has-children]="item.children?.length">
+                <a class="sidebar__link"
+                   [routerLink]="item.route"
+                   routerLinkActive="is-active"
+                   [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+                   (click)="closeMobile()"
+                   [title]="menu.collapsed() ? item.label : null">
+                  <span class="sidebar__link-icon"><app-icon [name]="item.icon" [size]="18" /></span>
+                  <span class="sidebar__link-label">{{ item.label }}</span>
+                  @if (item.badge && menu.badges()[item.id]; as count) {
+                    <span class="sidebar__badge">{{ count }}</span>
+                  }
+                </a>
+
+                <!-- Sous-menu : flyout quand collapsed, liste sinon -->
+                @if (item.children?.length) {
+                  <ul class="sidebar__submenu">
+                    @for (child of item.children; track child.id) {
+                      <li>
+                        <a class="sidebar__sublink"
+                           [routerLink]="child.route"
+                           routerLinkActive="is-active"
+                           (click)="closeMobile()">
+                          <app-icon [name]="child.icon" [size]="14" />
+                          {{ child.label }}
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </nav>
+
+  <!-- Pied : profile mini -->
+  <div class="sidebar__foot">
+    <div class="sidebar__user">
+      <span class="sidebar__user-avatar">{{ auth.currentUser()?.initiales ?? 'SG' }}</span>
+      <div class="sidebar__user-text">
+        <strong>{{ auth.currentUser()?.prenom }} {{ auth.currentUser()?.nom }}</strong>
+        <small>{{ auth.currentUser()?.role?.libelle }}</small>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- Voile mobile -->
+@if (menu.mobileOpen()) {
+  <div class="sidebar__overlay" (click)="closeMobile()"></div>
+}
